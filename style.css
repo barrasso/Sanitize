@@ -1,0 +1,50 @@
+#header {
+	height: 10%;
+	width: 100%;
+	left: 0;
+	top: 0;
+	position: absolute;
+	background-color: #007aff;
+	border-bottom: 1px solid #333333;
+}
+
+#map-canvas {
+	float: left;
+	left: 0;
+	top: 10%;
+	position: absolute;
+	height: 80%;
+	width: 80%;
+}
+
+#list {
+	float: right;
+	right: 0;
+	top: 10%;
+	position: absolute;
+	height: 80%;
+	width: 20%;
+	background-color: #bbbbbb;
+}
+
+#footer {
+	height: 10%;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	position: absolute;
+	background-color: #333333;
+	border-top: 1px solid #007aff;
+}
+
+#footer-p {
+	padding-top: 40px;
+	font-size: 14px;
+	text-align: center;
+	margin-bottom: 0px;
+	color: #ffffff;
+}
+
+#footer-a {
+	color: #ffffff;
+}

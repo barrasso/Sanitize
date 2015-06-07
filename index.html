@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <title>Sanitize | Home</title>
+
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <link href="style.css" rel="stylesheet">
+
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+    function initialize() {
+    	/* Setup Map */
+	    var mapCanvas = document.getElementById('map-canvas');
+	    var myLatlng = new google.maps.LatLng(32.706700, -117.162146)
+	    var mapOptions = {
+	      center: myLatlng,
+	      zoom: 14,
+	      mapTypeId: google.maps.MapTypeId.TERRAIN
+	    }
+	    var map = new google.maps.Map(mapCanvas, mapOptions)
+
+	    /* Add Markers to Map */
+		for (var i = 0; i < places.length; i++) {
+			var loc = places[i];
+			var title = loc[0];
+			var pos = new google.maps.LatLng(loc[1], loc[2]);
+	    	setMarkers(map, pos, title);
+	    }
+    }
+    	/* Global Variables */
+    	var currentWindow;
+    	var places = [
+  			['Burger Joint', 32.706700, -117.162146],
+  			['Chinese Food', 32.712036, -117.171052],
+  			['Bobby Burrito', 32.712036, -117.141052],
+  			['Johnny Rockets', 32.702036, -117.131052],
+  			['Deli Sandwiches', 32.712036, -117.131052],
+  			['Chipotle', 32.708249, -117.157507],
+  			['Pizza Joe', 32.700101, -117.187478],
+  			['Jamba Juice', 32.710101, -117.197478],
+  			['Bagel Store', 32.690101, -117.127478],
+  			['Sushi Place', 32.700101, -117.177478],
+  			['Dollar Pizza', 32.700101, -117.187478],
+  			['La Piazza', 32.700198, -117.159302]
+	 	];
+
+	function setMarkers(map, pos, t) {
+		  var image = 'images/marker-icon.png';
+		  var contentString = '<h2>'+t+'</h2>'+
+      						  '<div id="bodyContent">'+ '<p><b>'+t+'</b>, is a really clean place to eat at';
+		  var infowindow = new google.maps.InfoWindow({
+		      content: contentString,
+		      maxWidth: 200
+		  });
+
+		  /* Create new marker */
+	      var marker = new google.maps.Marker({
+	        position: pos,
+	        map: map,
+	        icon: image,
+	        title: t,
+	        animation: google.maps.Animation.DROP
+	      });
+
+	      /* Marker - Click Listener */
+	      google.maps.event.addListener(marker, 'click', function() {
+			if (currentWindow){
+			    currentWindow.close();
+			    infowindow.open(map, marker);
+			    currentWindow = infowindow;
+			} else {
+			    infowindow.open(map, marker);
+			    currentWindow = infowindow;
+			}
+		  });
+		}
+
+	/* Wait for initialization to finish */
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+  	<div id="header"></div>
+  	<div id="map-canvas"></div>
+  	<div id="list"></div>
+  	<div id="footer">
+  		<p id="footer-p">&copy; 2015 Sanitize. Created at <a id="footer-a" href="http://hackathon.cisco.com/event/ciscolive-sandiego-2015" target="_blank">Cisco Live Dev Net Hackathon.</a> </p>
+  	</div>
+  </body>
+</html>
