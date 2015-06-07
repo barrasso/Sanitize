@@ -20,7 +20,7 @@
 	    var mapOptions = {
 	      center: myLatlng,
 	      zoom: 14,
-	      mapTypeId: google.maps.MapTypeId.TERRAIN
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
 	    }
 	    var map = new google.maps.Map(mapCanvas, mapOptions)
 
@@ -29,30 +29,34 @@
 			var loc = places[i];
 			var title = loc[0];
 			var pos = new google.maps.LatLng(loc[1], loc[2]);
-	    	setMarkers(map, pos, title);
+			var rating = loc[3];
+			var subtitle = loc[4];
+			var photo = loc[5];
+	    	setMarkers(map, pos, title, rating, subtitle, photo);
 	    }
     }
     	/* Global Variables */
     	var currentWindow;
     	var places = [
-  			['Burger Joint', 32.706700, -117.162146],
-  			['Chinese Food', 32.712036, -117.171052],
-  			['Bobby Burrito', 32.712036, -117.141052],
-  			['Johnny Rockets', 32.702036, -117.131052],
-  			['Deli Sandwiches', 32.712036, -117.131052],
-  			['Chipotle', 32.708249, -117.157507],
-  			['Pizza Joe', 32.700101, -117.187478],
-  			['Jamba Juice', 32.710101, -117.197478],
-  			['Bagel Store', 32.690101, -117.127478],
-  			['Sushi Place', 32.700101, -117.177478],
-  			['Dollar Pizza', 32.700101, -117.187478],
-  			['La Piazza', 32.700198, -117.159302]
+  			['Burger Joint', 32.706700, -117.162146, 'twohands', 'not clean', 'burgerjoint.png'],
+  			['Chinese Food', 32.712036, -117.171052, 'fivehands', 'super clean', 'chinese.jpg'],
+  			['Bobby Burrito', 32.712036, -117.141052, 'fourhands', 'clean', 'burrito.jpg'],
+  			['Johnny Rockets', 32.702036, -117.131052, 'threehands', 'kinda clean', 'johnny.jpg'],
+  			['Deli Sandwiches', 32.712036, -117.131052, 'fivehands', 'super clean', 'deli.png'],
+  			['Chipotle', 32.708249, -117.157507, 'twohands', 'not clean', 'chipotle.jpg'],
+  			['Pizza Joe', 32.710101, -117.207478, 'fivehands', 'super clean', 'pizzeria.jpg'],
+  			['Jamba Juice', 32.710101, -117.197478, 'fourhands', 'clean', 'jamba.jpg'],
+  			['Bagel Store', 32.690101, -117.127478, 'threehands', 'kinda clean', 'bagels.jpg'],
+  			['Sushi Place', 32.700101, -117.177478, 'fivehands', 'super clean', 'sushi.jpg'],
+  			['Dollar Pizza', 32.700101, -117.187478, 'onehand', 'dirty', 'pizza.jpg'],
+  			['La Piazza', 32.700198, -117.159302, 'fivehands', 'super clean', 'lapiazza.jpg']
 	 	];
 
-	function setMarkers(map, pos, t) {
+	function setMarkers(map, pos, t, rating, subtitle, photo) {
 		  var image = 'images/marker-icon.png';
 		  var contentString = '<h2>'+t+'</h2>'+
-      						  '<div id="bodyContent">'+ '<p><b>'+t+'</b>, is a really clean place to eat at';
+      						  '<div id="bodyContent">' + '<img src="images/'+ photo +'" height="200px" width="200px">' + '<img src="images/'+ rating +'.png" height="30px" width="150px">' + '<p><b>'+t+'</b> is '+ subtitle +'.</div>' 
+      						  + '<div><a href="#">View Stats</a></div>';
 		  var infowindow = new google.maps.InfoWindow({
 		      content: contentString,
 		      maxWidth: 200
@@ -67,7 +71,7 @@
 	        animation: google.maps.Animation.DROP
 	      });
 
-	      /* Marker - Click Listener */
+	      /* Marker Click Listener */
 	      google.maps.event.addListener(marker, 'click', function() {
 			if (currentWindow){
 			    currentWindow.close();
@@ -85,9 +89,24 @@
     </script>
   </head>
   <body>
-  	<div id="header"></div>
+  	<div id="header">
+  		<img src="images/sanitize-logo.png" width="250px" height="50px"> 
+  	</div>
   	<div id="map-canvas"></div>
-  	<div id="list"></div>
+  	<div id="list">
+  		<div id="list-item"> <img id="list-item-pic" src="images/burgerjoint.png" width="100px" height="100px"> <div id="list-item-right"> <h3>Burger Joint</h3> <p>Not Clean • 0.03 mi</p> <img id="list-item-rating" src="images/twohands.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/chinese.jpg" width="100px" height="100px"> <div id="list-item-right">  <h3>Chinese Food</h3> <p>Super Clean • 0.62 mi</p> <img id="list-item-rating" src="images/fivehands.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/burrito.jpg" width="100px" height="100px"> <div id="list-item-right">  <h3>Bobby Burrito</h3> <p>Clean • 1.31 mi</p> <img id="list-item-rating" src="images/fourhands.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/johnny.jpg" width="100px" height="100px"> <div id="list-item-right">  <h3>Johnny Rockets</h3> <p>Kinda Clean • 1.86 mi</p> <img id="list-item-rating" src="images/threehands.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/deli.png" width="100px" height="100px"> <div id="list-item-right">  <h3>Deli Sandwiches</h3> <p>Super Clean • 1.87 mi</p> <img id="list-item-rating" src="images/fivehands.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/chipotle.jpg" width="100px" height="100px"> <div id="list-item-right">  <h3>Chipotle</h3> <p>Not Clean • 0.32 mi</p> <img id="list-item-rating" src="images/twohands.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/pizzeria.jpg" width="100px" height="100px"> <div id="list-item-right">  <h3>Pizza Joe</h3> <p>Super Clean • 2.65 mi</p> <img id="list-item-rating" src="images/fivehands.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/jamba.jpg" width="100px" height="100px"> <div id="list-item-right">  <h3>Jamba Juice</h3> <p>Clean • 2.05 mi</p> <img id="list-item-rating" src="images/fourhands.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/bagels.jpg" width="100px" height="100px"> <div id="list-item-right">  <h3>Bagel Store</h3> <p>Kinda Clean • 2.34 mi</p> <img id="list-item-rating" src="images/threehands.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/sushi.jpg" width="100px" height="100px"> <div id="list-item-right">  <h3>Sushi Place</h3> <p>Not Clean • 0.98 mi</p> <img id="list-item-rating" src="images/twohands.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/pizza.jpg" width="100px" height="100px"> <div id="list-item-right">  <h3>Dollar Pizza</h3> <p>Dirty • 1.52 mi</p> <img id="list-item-rating" src="images/onehand.png" width="150px" height="30px"> </div> </div>
+  		<div id="list-item"> <img id="list-item-pic" src="images/lapiazza.jpg" width="100px" height="100px"> <div id="list-item-right">  <h3>La Piazza</h3> <p>Super Clean • 0.48 mi</p> <img id="list-item-rating" src="images/fivehands.png" width="150px" height="30px"> </div> </div>	
+  	</div>
   	<div id="footer">
   		<p id="footer-p">&copy; 2015 Sanitize. Created at <a id="footer-a" href="http://hackathon.cisco.com/event/ciscolive-sandiego-2015" target="_blank">Cisco Live Dev Net Hackathon.</a> </p>
   	</div>
